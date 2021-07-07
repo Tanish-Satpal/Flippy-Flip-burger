@@ -1,0 +1,205 @@
+html {
+  display:grid;
+  place-items:center;
+  min-height:100vh;
+  font-family:sans-serif;
+  text-align:center;
+  overflow:hidden;
+  background:linear-gradient(to top, limegreen 5%, skyblue 5%);
+  cursor:crosshair;
+}
+html:before {
+  content:'';
+  width:200px;
+  height:100px;
+  position:absolute;
+  left:75%;
+  top:27%;
+  background:
+    radial-gradient(circle at 25% 90%, PowderBlue 20%, transparent 20%),
+    radial-gradient(circle at 62% 85%, PowderBlue 40%, transparent 40%);
+  animation:cloud 30s linear infinite;
+  opacity:.33;
+  z-index:-1;
+}
+@keyframes cloud {
+  50% { left:50%; }
+}
+html:after {
+  content:'';
+  width:300px;
+  height:200px;
+  position:absolute;
+  left:10%;
+  top:0;
+  background:
+    radial-gradient(circle at 25% 90%, PowderBlue 20%, transparent 20%),
+    radial-gradient(circle at 62% 85%, PowderBlue 40%, transparent 40%);
+  animation:cloud2 25s linear infinite;
+  opacity:.33;
+  z-index:-1;
+}
+@keyframes cloud2 {
+  50% { left:33%; }
+}
+body {
+  perspective:400px;  
+}
+#score {
+  position:absolute;
+  left:10px;
+  top:10px;
+  color:gray;
+  display:none;
+}
+
+#grill {
+  width:100%;
+  max-width:400px;
+  height:400px;
+  border-radius:50%;
+  background:
+    linear-gradient(to bottom,transparent 3px, dimgray 3px, transparent 7px),
+    linear-gradient(to right,transparent 23px, dimgray 23px, transparent 27px),
+    radial-gradient(circle at 50% 100%, gold, orangered, black 65%), black;
+  background-size:100% 10px, 50px 100%, 100% 100%;
+  background-position:0 0, 0 0, 0 0;
+  background-repeat:repeat, repeat, no-repeat;
+  display:grid;
+  place-items:center;
+  grid-template-columns: 200px 200px;
+  grid-row: auto auto;
+  transform:rotateX(55deg);
+  box-sizing:border-box;
+  border-bottom:40px solid #222;
+  box-shadow:inset 0 40px 0 black, 0 1px 0 skyblue;
+  position:relative;
+  z-index:1;
+  animation:fire 2s linear infinite;
+}
+@keyframes fire {
+  50% { background-position:0 0, 0 0, 0 50px; }
+}
+
+#grill_legs {
+  width:70%;
+  height:50vh;
+  position:absolute;
+  top:90%;
+  left:15%;
+  background:
+    linear-gradient(to right,#222 10%,transparent 10%,transparent 90%,#222 90%),
+    linear-gradient(to bottom,transparent 35%,#222 35%,#222 calc(35% + 15px),transparent calc(35% + 15px));
+  background-size:50% auto;
+  transform:rotateX(45deg);
+}
+
+#spatula {
+  width:50px;
+  height:200px;
+  background:silver;
+  box-shadow:inset 0 0 35px dimgray;
+  border-radius:5px;
+  clip-path:polygon(0% 0%, 
+    25% 0%, 25% 33%, 35% 33%, 35% 5%, 25% 5%, 25% 0%, 
+    45% 0%, 45% 33%, 55% 33%, 55% 5%, 45% 5%, 45% 0%,
+    65% 0%, 65% 33%, 75% 33%, 75% 5%, 65% 5%, 65% 0%,
+    100% 0%, 100% 33%, 65% 45%, 65% 100%, 35% 100%, 35% 45%, 0% 33%);
+  position:fixed;
+  transform-origin:center bottom;
+/*   transform:rotateZ(-20deg); */
+  z-index:4;
+  pointer-events:none;
+}
+
+.patty {
+  width:100px;
+  height:100px;
+/*   background:darkred; */
+  border-radius:50%;
+  box-shadow:inset 0px -10px rgba(0,0,0,.25);
+  transition:.5s;
+  cursor:pointer;
+  position:relative;
+  z-index:3;
+}
+@keyframes drop-in {
+  0% { transform:translateY(-200%); }
+}
+
+.patty:hover ~ #spatula {
+  z-index:2;
+}
+
+.flip ~ #spatula {
+  animation:flick .5s linear forwards;
+}
+
+@keyframes flick {
+  50% { transform:translateY(-20px) scale(1.5) rotateX(45deg); }
+}
+
+.patty:nth-child(1) {
+  margin:50px 0 0 50px;
+}
+.patty:nth-child(2) {
+  margin:50px 0 0 -50px;
+}
+.patty:nth-child(3) {
+  margin:-50px 0 0 50px;
+}
+.patty:nth-child(4) {
+  margin:-50px 0 0 -50px;
+}
+
+.flip {
+  animation:flip .5s linear forwards;
+}
+@keyframes flip {
+  50% { transform:translateY(-25%) scale(1.5) rotateY(90deg); }
+}
+.flipped {  
+  background:radial-gradient(ellipse, rgba(0,0,0,.25), transparent), darkred;
+  background-size:100% 10%;
+}
+
+.burn:before, .burn:after {
+  content:'';
+  width:20%;
+  height:20%;
+  background:white;
+  border-radius:50%;
+  position:absolute;
+  left:40%;
+  top:60%;
+  animation:smoke .75s ease-out .25s infinite;
+}
+@keyframes smoke {
+  100% { transform:translate(-100%,-300%) scale(6); opacity:0; }
+}
+.burn:after {
+  animation:smoke2 .75s ease-out infinite;
+}
+@keyframes smoke2 {
+  100% { transform:translate(100%,-300%) scale(6); opacity:0; }
+}
+
+/* meat colors */
+.meat1 .patty {
+  background-color:#ff7f7f;
+}
+.meat2 .patty {
+  background-color:#c38a8a;
+}
+.meat3 .patty {
+  background-color:#a16868;
+}
+.meat4 .patty {
+  background-color:#693d3d;
+}
+.meat5 .patty {
+  background-color:#542d2d;
+}
+.patty .burnt {
+  background-color:#333;
+}
